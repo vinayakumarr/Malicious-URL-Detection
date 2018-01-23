@@ -1,0 +1,58 @@
+/usr/local/lib/python2.7/dist-packages/sklearn/cross_validation.py:44: DeprecationWarning: This module was deprecated in version 0.18 in favor of the model_selection module into which all the refactored classes and functions are moved. Also note that the interface of the new CV iterators are different from that of this module. This module will be removed in 0.20.
+  "This module will be removed in 0.20.", DeprecationWarning)
+Using TensorFlow backend.
+2307
+2307
+Train on 281710 samples, validate on 138754 samples
+Epoch 1/1000
+Traceback (most recent call last):
+  File "rnn.py", line 90, in <module>
+    model.fit(X_train, y_train, batch_size=32, nb_epoch=1000,validation_split=0.33, shuffle=True,callbacks=[checkpointer,csv_logger])
+  File "/usr/local/lib/python2.7/dist-packages/keras/models.py", line 664, in fit
+    sample_weight=sample_weight)
+  File "/usr/local/lib/python2.7/dist-packages/keras/engine/training.py", line 1143, in fit
+    initial_epoch=initial_epoch)
+  File "/usr/local/lib/python2.7/dist-packages/keras/engine/training.py", line 843, in _fit_loop
+    outs = f(ins_batch)
+  File "/usr/local/lib/python2.7/dist-packages/keras/backend/tensorflow_backend.py", line 1603, in __call__
+    feed_dict=feed_dict)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/client/session.py", line 766, in run
+    run_metadata_ptr)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/client/session.py", line 964, in _run
+    feed_dict_string, options, run_metadata)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/client/session.py", line 1014, in _do_run
+    target_list, options, run_metadata)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/client/session.py", line 1034, in _do_call
+    raise type(e)(node_def, op, message)
+tensorflow.python.framework.errors_impl.InvalidArgumentError: indices[0,2255] = 154 is not in [0, 148)
+	 [[Node: Gather = Gather[Tindices=DT_INT32, Tparams=DT_FLOAT, validate_indices=true, _device="/job:localhost/replica:0/task:0/cpu:0"](embedding_1_W/read, _recv_embedding_input_1_0)]]
+
+Caused by op u'Gather', defined at:
+  File "rnn.py", line 81, in <module>
+    model.add(Embedding(max_features, embedding_vecor_length, input_length=maxlen))
+  File "/usr/local/lib/python2.7/dist-packages/keras/models.py", line 294, in add
+    layer.create_input_layer(batch_input_shape, input_dtype)
+  File "/usr/local/lib/python2.7/dist-packages/keras/engine/topology.py", line 398, in create_input_layer
+    self(x)
+  File "/usr/local/lib/python2.7/dist-packages/keras/engine/topology.py", line 569, in __call__
+    self.add_inbound_node(inbound_layers, node_indices, tensor_indices)
+  File "/usr/local/lib/python2.7/dist-packages/keras/engine/topology.py", line 632, in add_inbound_node
+    Node.create_node(self, inbound_layers, node_indices, tensor_indices)
+  File "/usr/local/lib/python2.7/dist-packages/keras/engine/topology.py", line 164, in create_node
+    output_tensors = to_list(outbound_layer.call(input_tensors[0], mask=input_masks[0]))
+  File "/usr/local/lib/python2.7/dist-packages/keras/layers/embeddings.py", line 127, in call
+    out = K.gather(W, x)
+  File "/usr/local/lib/python2.7/dist-packages/keras/backend/tensorflow_backend.py", line 925, in gather
+    return tf.gather(reference, indices)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/ops/gen_array_ops.py", line 1293, in gather
+    validate_indices=validate_indices, name=name)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/framework/op_def_library.py", line 759, in apply_op
+    op_def=op_def)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/framework/ops.py", line 2240, in create_op
+    original_op=self._default_original_op, op_def=op_def)
+  File "/usr/local/lib/python2.7/dist-packages/tensorflow/python/framework/ops.py", line 1128, in __init__
+    self._traceback = _extract_stack()
+
+InvalidArgumentError (see above for traceback): indices[0,2255] = 154 is not in [0, 148)
+	 [[Node: Gather = Gather[Tindices=DT_INT32, Tparams=DT_FLOAT, validate_indices=true, _device="/job:localhost/replica:0/task:0/cpu:0"](embedding_1_W/read, _recv_embedding_input_1_0)]]
+
